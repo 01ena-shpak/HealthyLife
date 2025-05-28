@@ -1,0 +1,51 @@
+﻿<Page x:Class="HealthyLife.Views.TrainingPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d">
+
+    <Page.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FFF9C4" Offset="0" />
+            <GradientStop Color="#F8BBD0" Offset="1" />
+        </LinearGradientBrush>
+    </Page.Background>
+
+    <ScrollViewer>
+        <StackPanel Margin="20">
+            <!-- Заголовок тренування -->
+            <TextBlock Text="Додати тренування" FontSize="24" FontWeight="Bold"
+                       HorizontalAlignment="Center" Margin="0,10,0,20">
+                <TextBlock.Foreground>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="#FF8A65" Offset="0" />
+                        <GradientStop Color="#F06292" Offset="1" />
+                    </LinearGradientBrush>
+                </TextBlock.Foreground>
+            </TextBlock>
+
+            <!-- Поля для вводу тренування -->
+            <Border Background="White" CornerRadius="20" Padding="10" Margin="0,10">
+                <StackPanel>
+                    <TextBlock Text="Вид тренування" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,10"/>
+                    <ComboBox Margin="0,5">
+                        <ComboBoxItem Content="Силове"/>
+                        <ComboBoxItem Content="Кардіо"/>
+                        <ComboBoxItem Content="Йога"/>
+                        <ComboBoxItem Content="Інше"/>
+                    </ComboBox>
+
+                    <TextBlock Text="Тривалість (хвилини)" FontWeight="SemiBold" Margin="10,10,0,0"/>
+                    <TextBox materialDesign:HintAssist.Hint="Тривалість" Margin="0,5"/>
+
+                    <TextBlock Text="Калорії" FontWeight="SemiBold" Margin="10,10,0,0"/>
+                    <TextBox materialDesign:HintAssist.Hint="Калорії" Margin="0,5"/>
+
+                    <Button Content="Додати тренування" Background="#AED581" Foreground="White" Width="180" Margin="0,10"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

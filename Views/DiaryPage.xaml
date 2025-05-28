@@ -1,0 +1,112 @@
+﻿<Page x:Class="HealthyLife.Views.DiaryPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d">
+
+    <Page.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FFF9C4" Offset="0" />
+            <GradientStop Color="#F8BBD0" Offset="1" />
+        </LinearGradientBrush>
+    </Page.Background>
+
+    <ScrollViewer>
+        <StackPanel Margin="20">
+            <!-- Заголовок -->
+            <TextBlock Text="Щоденник" FontSize="24" FontWeight="Bold"
+                       HorizontalAlignment="Center" Margin="0,10,0,10">
+                <TextBlock.Foreground>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="#FF8A65" Offset="0" />
+                        <GradientStop Color="#F06292" Offset="1" />
+                    </LinearGradientBrush>
+                </TextBlock.Foreground>
+            </TextBlock>
+
+            <!-- Кільце прогресу калорій -->
+            <Grid HorizontalAlignment="Center" Margin="0,10">
+                <Ellipse Width="200" Height="200" Stroke="#F06292" StrokeThickness="10" />
+                <TextBlock Text="1200 ккал" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="Bold"/>
+            </Grid>
+
+            <!-- Блок БЖУ -->
+            <Border Background="White" CornerRadius="20" Padding="10" Margin="0,10">
+                <StackPanel>
+                    <TextBlock Text="Баланс БЖУ за день" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,10"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Вуглеводи" Width="80"/>
+                        <ProgressBar Value="70" Maximum="100" Width="200" Height="10" Foreground="Orange"/>
+                        <TextBlock Text="140/200g" Margin="10,0,0,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Білки" Width="80"/>
+                        <ProgressBar Value="50" Maximum="100" Width="200" Height="10" Foreground="Pink"/>
+                        <TextBlock Text="50/100g" Margin="10,0,0,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Жири" Width="80"/>
+                        <ProgressBar Value="30" Maximum="100" Width="200" Height="10" Foreground="Purple"/>
+                        <TextBlock Text="30/60g" Margin="10,0,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Блок прийомів їжі -->
+            <StackPanel Margin="0,10">
+                <TextBlock Text="Прийоми їжі" FontSize="20" FontWeight="SemiBold"/>
+                <WrapPanel>
+                    <Border Background="White" CornerRadius="20" Padding="10" Margin="5">
+                        <StackPanel>
+                            <TextBlock Text="Сніданок" FontWeight="Bold" FontSize="16"/>
+                            <TextBlock Text="0 ккал" Margin="0,5"/>
+                            <Button Content="Додати" Background="#FFB74D" Foreground="White"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Background="White" CornerRadius="20" Padding="10" Margin="5">
+                        <StackPanel>
+                            <TextBlock Text="Обід" FontWeight="Bold" FontSize="16"/>
+                            <TextBlock Text="0 ккал" Margin="0,5"/>
+                            <Button Content="Додати" Background="#F48FB1" Foreground="White"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Background="White" CornerRadius="20" Padding="10" Margin="5">
+                        <StackPanel>
+                            <TextBlock Text="Вечеря" FontWeight="Bold" FontSize="16"/>
+                            <TextBlock Text="0 ккал" Margin="0,5"/>
+                            <Button Content="Додати" Background="#AED581" Foreground="White"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Background="White" CornerRadius="20" Padding="10" Margin="5">
+                        <StackPanel>
+                            <TextBlock Text="Перекус" FontWeight="Bold" FontSize="16"/>
+                            <TextBlock Text="0 ккал" Margin="0,5"/>
+                            <Button Content="Додати" Background="#CE93D8" Foreground="White"/>
+                        </StackPanel>
+                    </Border>
+                </WrapPanel>
+            </StackPanel>
+
+            <!-- Блок вода -->
+            <StackPanel Margin="0,10">
+                <TextBlock Text="Вода" FontSize="20" FontWeight="SemiBold"/>
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="–" Width="40" Height="40" Margin="5"/>
+                    <Button Content="+" Width="40" Height="40" Margin="5"/>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Блок тренування -->
+            <Border Background="White" CornerRadius="20" Padding="10" Margin="0,10">
+                <StackPanel>
+                    <TextBlock Text="Тренування" FontWeight="Bold" FontSize="16"/>
+                    <TextBlock Text="0 ккал" Margin="0,5"/>
+                    <TextBlock Text="Немає запису" Margin="0,5"/>
+                    <Button Content="Додати тренування" Background="#AED581" Foreground="White" Width="150" Margin="0,5"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>
