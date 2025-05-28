@@ -20,9 +20,21 @@ namespace HealthyLife.Views
     /// </summary>
     public partial class TrainingPage : Page
     {
+        private Frame _mainFrame;
         public TrainingPage()
         {
             InitializeComponent();
+        }
+
+        public TrainingPage(Frame mainFrame)
+        {
+            InitializeComponent();
+            _mainFrame = mainFrame;
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            _mainFrame.GoBack();
         }
     }
 }

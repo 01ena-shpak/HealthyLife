@@ -20,9 +20,23 @@ namespace HealthyLife.Views
     /// </summary>
     public partial class MealPage : Page
     {
+        private Frame _mainFrame;
         public MealPage()
         {
             InitializeComponent();
         }
+
+        public MealPage(Frame mainFrame, string mealType)
+        {
+            InitializeComponent();
+            _mainFrame = mainFrame;
+            MealTitle.Text = mealType;
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            _mainFrame.GoBack();
+        }
+
     }
 }

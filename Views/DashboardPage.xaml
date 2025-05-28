@@ -35,12 +35,15 @@
 
         <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" >
             <Button Content="Щоденник" Width="200" Height="50"
+                    Click="DiaryButton_Click"
                     Style="{StaticResource MaterialDesignRaisedButton}"
                     Background="#FFB74D" Foreground="White"/>
             <Button Content="Статистика" Width="200" Height="50"
+                    Click="StatsButton_Click"
                     Style="{StaticResource MaterialDesignRaisedButton}"
                     Background="#F48FB1" Foreground="White"/>
             <Button Content="Профіль" Width="200" Height="50"
+                    Click="ProfileButton_Click"
                     Style="{StaticResource MaterialDesignRaisedButton}"
                     Background="#AED581" Foreground="White"/>
         </StackPanel>

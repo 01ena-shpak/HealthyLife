@@ -20,9 +20,46 @@ namespace HealthyLife.Views
     /// </summary>
     public partial class DiaryPage : Page
     {
+        private Frame _mainFrame;
         public DiaryPage()
         {
             InitializeComponent();
         }
+        public DiaryPage(Frame mainFrame)
+        {
+            InitializeComponent();
+            _mainFrame = mainFrame;
+        }
+
+        private void BreakfastButton_Click(object sender, RoutedEventArgs e)
+        {
+            _mainFrame.Navigate(new MealPage(_mainFrame, "Сніданок"));
+        }
+
+        private void LunchButton_Click(object sender, RoutedEventArgs e)
+        {
+            _mainFrame.Navigate(new MealPage(_mainFrame, "Обід"));
+        }
+
+        private void DinnerButton_Click(object sender, RoutedEventArgs e)
+        {
+            _mainFrame.Navigate(new MealPage(_mainFrame, "Вечеря"));
+        }
+
+        private void SnackButton_Click(object sender, RoutedEventArgs e)
+        {
+            _mainFrame.Navigate(new MealPage(_mainFrame, "Перекус"));
+        }
+
+        private void TrainingButton_Click(object sender, RoutedEventArgs e)
+        {
+            _mainFrame.Navigate(new TrainingPage(_mainFrame));
+        }
+
+        private void BackToDashboard_Click(object sender, RoutedEventArgs e)
+        {
+            _mainFrame.Navigate(new DashboardPage(_mainFrame));
+        }
+
     }
 }

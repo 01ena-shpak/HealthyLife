@@ -23,7 +23,7 @@ namespace HealthyLife
         public MainWindow()
         {
             InitializeComponent();
-            MainFrame.Navigate(new Views.LoginRegisterPage());
+            MainFrame.Navigate(new Views.LoginRegisterPage(MainFrame));
         }
     }
 }

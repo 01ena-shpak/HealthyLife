@@ -20,9 +20,30 @@ namespace HealthyLife.Views
     /// </summary>
     public partial class DashboardPage : Page
     {
+        private Frame _mainFrame;
         public DashboardPage()
         {
             InitializeComponent();
+        }
+        public DashboardPage(Frame mainFrame)
+        {
+            InitializeComponent();
+            _mainFrame = mainFrame;
+        }
+
+        private void DiaryButton_Click(object sender, RoutedEventArgs e)
+        {
+            _mainFrame.Navigate(new DiaryPage(_mainFrame));
+        }
+
+        private void StatsButton_Click(object sender, RoutedEventArgs e)
+        {
+            _mainFrame.Navigate(new StatsPage(_mainFrame));
+        }
+
+        private void ProfileButton_Click(object sender, RoutedEventArgs e)
+        {
+            _mainFrame.Navigate(new ProfilePage(_mainFrame));
         }
     }
 }

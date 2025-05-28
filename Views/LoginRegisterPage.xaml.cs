@@ -20,9 +20,26 @@ namespace HealthyLife.Views
     /// </summary>
     public partial class LoginRegisterPage : Page
     {
+        private Frame _mainFrame;
         public LoginRegisterPage()
         {
             InitializeComponent();
+        }
+
+        public LoginRegisterPage(Frame mainFrame)
+        {
+            InitializeComponent();
+            _mainFrame = mainFrame;
+        }
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            _mainFrame.Navigate(new DashboardPage(_mainFrame));
+        }
+
+        private void RegisterButton_Click(object sender, RoutedEventArgs e)
+        {
+            _mainFrame.Navigate(new DashboardPage(_mainFrame));
         }
     }
 }
