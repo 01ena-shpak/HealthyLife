@@ -82,8 +82,8 @@
 
                 <TabItem Header="Вхід">
                     <StackPanel Margin="20" VerticalAlignment="Center">
-                        <TextBox materialDesign:HintAssist.Hint="Логін" Margin="0,10"/>
-                        <PasswordBox materialDesign:HintAssist.Hint="Пароль" Margin="0,10"/>
+                        <TextBox x:Name="LoginUsername"  materialDesign:HintAssist.Hint="Логін" Margin="0,10"/>
+                        <PasswordBox x:Name="LoginPassword"  materialDesign:HintAssist.Hint="Пароль" Margin="0,10"/>
                         <Button Content="Увійти"
                                 Click="LoginButton_Click"
                                 Style="{StaticResource MaterialDesignRaisedButton}"
@@ -94,10 +94,10 @@
 
                 <TabItem Header="Реєстрація">
                     <StackPanel Margin="20" VerticalAlignment="Center">
-                        <TextBox materialDesign:HintAssist.Hint="Логін" Margin="0,10"/>
-                        <TextBox materialDesign:HintAssist.Hint="Електронна пошта" Margin="0,10"/>
-                        <PasswordBox materialDesign:HintAssist.Hint="Пароль" Margin="0,10"/>
-                        <PasswordBox materialDesign:HintAssist.Hint="Підтвердження пароля" Margin="0,10"/>
+                        <TextBox x:Name="RegisterUsername" materialDesign:HintAssist.Hint="Логін" Margin="0,10"/>
+                        <TextBox x:Name="RegisterEmail" materialDesign:HintAssist.Hint="Електронна пошта" Margin="0,10"/>
+                        <PasswordBox x:Name="RegisterPassword" materialDesign:HintAssist.Hint="Пароль" Margin="0,10"/>
+                        <PasswordBox x:Name="RegisterConfirmPassword" materialDesign:HintAssist.Hint="Підтвердження пароля" Margin="0,10"/>
                         <Button Content="Зареєструватися"
                                 Click="RegisterButton_Click"
                                 Style="{StaticResource MaterialDesignRaisedButton}"
