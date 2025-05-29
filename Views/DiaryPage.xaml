@@ -111,6 +111,15 @@
                     <Button Content="Додати тренування" Click="TrainingButton_Click" Background="#AED581" Foreground="White" Width="150" Margin="0,5"/>
                 </StackPanel>
             </Border>
+
+            <!-- Блок заміри -->
+            <Border Background="White" CornerRadius="20" Padding="10" Margin="0,10">
+                <StackPanel>
+                    <TextBlock Text="Заміри" FontWeight="Bold" FontSize="16"/>
+                    <TextBlock x:Name="CurrentWeightText" Text="Немає запису" Margin="0,5"/>
+                    <Button Content="Додати заміри" Click="MeasurementsButton_Click" Background="#FFB74D" Foreground="White" Width="150" Margin="0,5"/>
+                </StackPanel>
+            </Border>
         </StackPanel>
     </ScrollViewer>
 </Page>

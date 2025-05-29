@@ -94,6 +94,9 @@
     <Compile Include="Views\MealPage.xaml.cs">
       <DependentUpon>MealPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MeasurementsPage.xaml.cs">
+      <DependentUpon>MeasurementsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
@@ -128,6 +131,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MealPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MeasurementsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

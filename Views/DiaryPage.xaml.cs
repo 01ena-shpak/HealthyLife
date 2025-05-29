@@ -56,6 +56,11 @@ namespace HealthyLife.Views
             _mainFrame.Navigate(new TrainingPage(_mainFrame));
         }
 
+        private void MeasurementsButton_Click(object sender, RoutedEventArgs e)
+        {
+            _mainFrame.Navigate(new MeasurementsPage(_mainFrame));
+        }
+
         private void BackToDashboard_Click(object sender, RoutedEventArgs e)
         {
             _mainFrame.Navigate(new DashboardPage(_mainFrame));

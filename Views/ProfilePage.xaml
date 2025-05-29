@@ -19,7 +19,6 @@
                     Background="Transparent" Foreground="Black" 
                     BorderThickness="0" HorizontalAlignment="Left"/>
             
-            <!-- Заголовок -->
             <TextBlock Text="Профіль" FontSize="24" FontWeight="Bold"
                        HorizontalAlignment="Center" Margin="0,10,0,20">
                 <TextBlock.Foreground>
@@ -30,7 +29,6 @@
                 </TextBlock.Foreground>
             </TextBlock>
 
-            <!-- Дані користувача -->
             <Border Background="White" CornerRadius="20" Padding="10" Margin="0,10">
                 <StackPanel>
                     <TextBlock Text="Ім'я" FontWeight="SemiBold"/>
@@ -52,11 +50,17 @@
                         <ComboBoxItem Content="Активний"/>
                     </ComboBox>
 
+                    <TextBlock Text="Мета" FontWeight="SemiBold" Margin="10,0,0,0"/>
+                    <ComboBox Margin="0,5">
+                        <ComboBoxItem Content="Схуднення"/>
+                        <ComboBoxItem Content="Підтримка ваги"/>
+                        <ComboBoxItem Content="Набір ваги"/>
+                    </ComboBox>
+
                     <Button Content="Зберегти" Background="#FFB74D" Foreground="White" Width="150" Margin="0,10"/>
                 </StackPanel>
             </Border>
 
-            <!-- Кнопка виходу -->
             <Button Content="Вийти" Click="ExitButton_Click" Background="#F48FB1" Foreground="White" Width="150" Margin="0,10" HorizontalAlignment="Center"/>
         </StackPanel>
     </ScrollViewer>
