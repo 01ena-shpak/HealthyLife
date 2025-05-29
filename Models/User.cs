@@ -16,5 +16,6 @@ namespace HealthyLife.Models
         public double Weight { get; set; }
         public int Age { get; set; }
         public string Lifestyle { get; set; }
+        public string Goal { get; set; }
     }
 }

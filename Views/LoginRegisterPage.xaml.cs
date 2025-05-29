@@ -32,6 +32,7 @@ namespace HealthyLife.Views
             _mainFrame = mainFrame;
         }
 
+        public static string CurrentUsername; // стат змінна для збереження логіну
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             bool isValid = true;
@@ -64,6 +65,7 @@ namespace HealthyLife.Views
 
             if (Services.UserService.AuthenticateUser(LoginUsername.Text, LoginPassword.Password))
             {
+                CurrentUsername = LoginUsername.Text; // зберігаємо логін
                 MessageBox.Show("Вхід успішний!");
                 _mainFrame.Navigate(new DashboardPage(_mainFrame));
             }

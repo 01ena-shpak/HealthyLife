@@ -28,14 +28,15 @@ namespace HealthyLife.Services
                                             Height REAL,
                                             Weight REAL,
                                             Age INTEGER,
-                                            Lifestyle TEXT
+                                            Lifestyle TEXT,
+                                            Goal TEXT
                                         )";
                 SQLiteCommand command = new SQLiteCommand(createTableQuery, connection);
                 command.ExecuteNonQuery();
             }
         }
 
-        // Реєстрація нового користувача
+        // реєстрація нового користувача
         public static bool RegisterUser(User user)
         {
             using (var connection = new SQLiteConnection(connectionString))
@@ -65,6 +66,8 @@ namespace HealthyLife.Services
                 }
             }
         }
+        
+        // перевірка авторизації користувача
         public static bool AuthenticateUser(string username, string password)
         {
             using (var connection = new SQLiteConnection(connectionString))
@@ -78,5 +81,60 @@ namespace HealthyLife.Services
                 return count > 0;
             }
         }
+
+        // отримання даних користувача з логіки
+        public static User GetUserByUsername(string username)
+        {
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                string query = "SELECT * FROM Users WHERE Username = @Username";
+                var cmd = new SQLiteCommand(query, connection);
+                cmd.Parameters.AddWithValue("@Username", username);
+                var reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    return new User
+                    {
+                        Id = Convert.ToInt32(reader["Id"]),
+                        Username = reader["Username"].ToString(),
+                        Email = reader["Email"].ToString(),
+                        Password = reader["Password"].ToString(),
+                        Height = Convert.ToDouble(reader["Height"]),
+                        Weight = Convert.ToDouble(reader["Weight"]),
+                        Age = Convert.ToInt32(reader["Age"]),
+                        Lifestyle = reader["Lifestyle"].ToString(),
+                        Goal = reader["Goal"].ToString()
+                    };
+                }
+                return null;
+            }
+        }
+
+        // оновлення профілю користувача
+        public static void UpdateUserProfile(User user)
+        {
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                string query = @"UPDATE Users SET 
+                            Height = @Height,
+                            Weight = @Weight,
+                            Age = @Age,
+                            Lifestyle = @Lifestyle,
+                            Goal = @Goal
+                         WHERE Username = @Username";
+                var cmd = new SQLiteCommand(query, connection);
+                cmd.Parameters.AddWithValue("@Height", user.Height);
+                cmd.Parameters.AddWithValue("@Weight", user.Weight);
+                cmd.Parameters.AddWithValue("@Age", user.Age);
+                cmd.Parameters.AddWithValue("@Lifestyle", user.Lifestyle);
+                cmd.Parameters.AddWithValue("@Goal", user.Goal);
+                cmd.Parameters.AddWithValue("@Username", user.Username);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
     }
 }
