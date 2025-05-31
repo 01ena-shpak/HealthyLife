@@ -51,5 +51,52 @@ namespace HealthyLife.Services
             }
             return waterList;
         }
+
+        public static void UpdateWaterIntake(string username, string date, double amount)
+        {
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                string checkQuery = "SELECT COUNT(*) FROM WaterIntake WHERE Username=@Username AND Date=@Date";
+                var checkCmd = new SQLiteCommand(checkQuery, connection);
+                checkCmd.Parameters.AddWithValue("@Username", username);
+                checkCmd.Parameters.AddWithValue("@Date", date);
+                int exists = Convert.ToInt32(checkCmd.ExecuteScalar());
+
+                if (exists > 0)
+                {
+                    string updateQuery = "UPDATE WaterIntake SET Amount=@Amount WHERE Username=@Username AND Date=@Date";
+                    var updateCmd = new SQLiteCommand(updateQuery, connection);
+                    updateCmd.Parameters.AddWithValue("@Amount", amount);
+                    updateCmd.Parameters.AddWithValue("@Username", username);
+                    updateCmd.Parameters.AddWithValue("@Date", date);
+                    updateCmd.ExecuteNonQuery();
+                }
+                else
+                {
+                    string insertQuery = "INSERT INTO WaterIntake (Username, Date, Amount) VALUES (@Username, @Date, @Amount)";
+                    var insertCmd = new SQLiteCommand(insertQuery, connection);
+                    insertCmd.Parameters.AddWithValue("@Username", username);
+                    insertCmd.Parameters.AddWithValue("@Date", date);
+                    insertCmd.Parameters.AddWithValue("@Amount", amount);
+                    insertCmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static double GetWaterAmountByDate(string username, string date)
+        {
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                string query = "SELECT Amount FROM WaterIntake WHERE Username=@Username AND Date=@Date";
+                var cmd = new SQLiteCommand(query, connection);
+                cmd.Parameters.AddWithValue("@Username", username);
+                cmd.Parameters.AddWithValue("@Date", date);
+                var result = cmd.ExecuteScalar();
+                return result != null ? Convert.ToDouble(result) : 0;
+            }
+        }
+
     }
 }

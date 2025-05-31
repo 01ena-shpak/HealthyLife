@@ -30,10 +30,30 @@
                 </TextBlock.Foreground>
             </TextBlock>
 
-            <!-- Кільце прогресу калорій -->
             <Grid HorizontalAlignment="Center" Margin="0,10">
-                <Ellipse Width="200" Height="200" Stroke="#F06292" StrokeThickness="10" />
-                <TextBlock Text="1200 ккал" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="Bold"/>
+                <Grid Width="250" Height="250">
+                    <Ellipse Stroke="#F06292" StrokeThickness="20"/>
+                    <TextBlock x:Name="CaloriesOverText" Text="179" FontSize="36" FontWeight="Bold"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock x:Name="CaloriesStatusText" Text="Ккал залишилось" FontSize="16"
+                   HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,80"/>
+                </Grid>
+
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="400">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" HorizontalAlignment="Left">
+                        <TextBlock x:Name="CaloriesEatenText" Text="1910" FontSize="24" FontWeight="Bold"/>
+                        <TextBlock Text="З’їдено" FontSize="16"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" HorizontalAlignment="Right">
+                        <TextBlock x:Name="CaloriesBurnedText" Text="297" FontSize="24" FontWeight="Bold"/>
+                        <TextBlock Text="Спалено" FontSize="16"/>
+                    </StackPanel>
+                </Grid>
             </Grid>
 
             <!-- Блок БЖУ -->
@@ -94,13 +114,18 @@
             </StackPanel>
 
             <!-- Блок вода -->
-            <StackPanel Margin="0,10">
-                <TextBlock Text="Вода" FontSize="20" FontWeight="SemiBold"/>
-                <StackPanel Orientation="Horizontal">
-                    <Button Content="–" Width="40" Height="40" Margin="5"/>
-                    <Button Content="+" Width="40" Height="40" Margin="5"/>
+            <Border Background="White" CornerRadius="20" Padding="10" Margin="0,10">
+                <StackPanel Margin="0,10">
+                    <TextBlock Text="Вода" FontSize="20" FontWeight="SemiBold"/>
+                    <TextBlock x:Name="WaterAmountText" Text="0 мл" Margin="0,5"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="–" Width="40" Height="40" Margin="5" Click="MinusWaterButton_Click"/>
+                        <Button Content="+" Width="40" Height="40" Margin="5" Click="PlusWaterButton_Click"/>
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
+            </Border>
+            
+
 
             <!-- Блок тренування -->
             <Border Background="White" CornerRadius="20" Padding="10" Margin="0,10">

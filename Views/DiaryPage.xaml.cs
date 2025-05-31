@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HealthyLife.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,6 +30,7 @@ namespace HealthyLife.Views
         {
             InitializeComponent();
             _mainFrame = mainFrame;
+            LoadWaterAmount();
         }
 
         private void BreakfastButton_Click(object sender, RoutedEventArgs e)
@@ -64,6 +66,30 @@ namespace HealthyLife.Views
         private void BackToDashboard_Click(object sender, RoutedEventArgs e)
         {
             _mainFrame.Navigate(new DashboardPage(_mainFrame));
+        }
+
+        private double currentWaterAmount = 0; // збереження кількості води
+
+        private void PlusWaterButton_Click(object sender, RoutedEventArgs e)
+        {
+            currentWaterAmount += 250;
+            WaterAmountText.Text = $"{currentWaterAmount} мл";
+            WaterIntakeService.UpdateWaterIntake(LoginRegisterPage.CurrentUsername, DateTime.Now.ToString("yyyy-MM-dd"), currentWaterAmount);
+        }
+
+        private void MinusWaterButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentWaterAmount >= 250)
+            {
+                currentWaterAmount -= 250;
+                WaterAmountText.Text = $"{currentWaterAmount} мл";
+                WaterIntakeService.UpdateWaterIntake(LoginRegisterPage.CurrentUsername, DateTime.Now.ToString("yyyy-MM-dd"), currentWaterAmount);
+            }
+        }
+        private void LoadWaterAmount()
+        {
+            currentWaterAmount = WaterIntakeService.GetWaterAmountByDate(LoginRegisterPage.CurrentUsername, DateTime.Now.ToString("yyyy-MM-dd"));
+            WaterAmountText.Text = $"{currentWaterAmount} мл";
         }
     }
 }
