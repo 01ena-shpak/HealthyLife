@@ -32,18 +32,18 @@
             <Border Background="White" CornerRadius="20" Padding="10" Margin="0,10">
                 <StackPanel>
                     <TextBlock Text="Вага (кг)" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,10"/>
-                    <TextBox materialDesign:HintAssist.Hint="Введіть вагу" Margin="0,5"/>
+                    <TextBox x:Name="WeightTextBox" materialDesign:HintAssist.Hint="Введіть вагу" Margin="0,5"/>
 
                     <TextBlock Text="Обхват грудей (см)" FontWeight="SemiBold" Margin="10,10,0,0"/>
-                    <TextBox materialDesign:HintAssist.Hint="Введіть обхват" Margin="0,5"/>
+                    <TextBox x:Name="ChestTextBox" materialDesign:HintAssist.Hint="Введіть обхват" Margin="0,5"/>
 
                     <TextBlock Text="Обхват талії (см)" FontWeight="SemiBold" Margin="10,10,0,0"/>
-                    <TextBox materialDesign:HintAssist.Hint="Введіть обхват" Margin="0,5"/>
+                    <TextBox x:Name="WaistTextBox" materialDesign:HintAssist.Hint="Введіть обхват" Margin="0,5"/>
 
                     <TextBlock Text="Обхват стегон (см)" FontWeight="SemiBold" Margin="10,10,0,0"/>
-                    <TextBox materialDesign:HintAssist.Hint="Введіть обхват" Margin="0,5"/>
+                    <TextBox x:Name="HipsTextBox" materialDesign:HintAssist.Hint="Введіть обхват" Margin="0,5"/>
 
-                    <Button Content="Зберегти" Background="#FFB74D" Foreground="White" Width="180" Margin="0,10"/>
+                    <Button Content="Зберегти" Click="SaveButton_Click"  Background="#FFB74D" Foreground="White" Width="180" Margin="0,10"/>
                 </StackPanel>
             </Border>
         </StackPanel>

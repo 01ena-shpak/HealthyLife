@@ -6,16 +6,14 @@ using System.Threading.Tasks;
 
 namespace HealthyLife.Models
 {
-     public class User
+    public class Measurement
     {
         public int Id { get; set; }
         public string Username { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public double Height { get; set; }
+        public string Date { get; set; }
         public double Weight { get; set; }
-        public int Age { get; set; }
-        public string Lifestyle { get; set; }
-        public string Goal { get; set; }
+        public double Chest { get; set; }
+        public double Waist { get; set; }
+        public double Hips { get; set; }
     }
 }

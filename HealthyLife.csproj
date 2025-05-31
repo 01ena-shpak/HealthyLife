@@ -80,8 +80,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\Meal.cs" />
+    <Compile Include="Models\Measurement.cs" />
+    <Compile Include="Models\Training.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\WaterIntake.cs" />
+    <Compile Include="Services\MealService.cs" />
+    <Compile Include="Services\MeasurementService.cs" />
+    <Compile Include="Services\TrainingService.cs" />
     <Compile Include="Services\UserService.cs" />
+    <Compile Include="Services\WaterIntakeService.cs" />
+    <Compile Include="Services\WaterService.cs" />
     <Compile Include="Views\DashboardPage.xaml.cs">
       <DependentUpon>DashboardPage.xaml</DependentUpon>
     </Compile>

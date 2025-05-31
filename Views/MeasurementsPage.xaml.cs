@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HealthyLife.Models;
+using HealthyLife.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,6 +37,31 @@ namespace HealthyLife.Views
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             _mainFrame.GoBack();
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(WeightTextBox.Text))
+            {
+                MessageBox.Show("Введіть вагу");
+                return;
+            }
+
+            var measurement = new Measurement
+            {
+                Username = LoginRegisterPage.CurrentUsername, // логін поточного користувача
+                Date = DateTime.Now.ToString("yyyy-MM-dd"),
+                Weight = double.TryParse(WeightTextBox.Text, out var weight) ? weight : 0,
+                Chest = double.TryParse(ChestTextBox.Text, out var chest) ? chest : 0,
+                Waist = double.TryParse(WaistTextBox.Text, out var waist) ? waist : 0,
+                Hips = double.TryParse(HipsTextBox.Text, out var hips) ? hips : 0
+            };
+
+            MeasurementService.AddMeasurement(measurement);
+            MessageBox.Show("Заміри збережено!");
+
+            // повернення на щоденник
+            _mainFrame.Navigate(new DiaryPage(_mainFrame));
         }
     }
 }

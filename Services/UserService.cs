@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace HealthyLife.Services
 {
-    internal class UserService
+    public class UserService
     {
         // шлях до бази даних
         private static string connectionString = "Data Source=users.db";
