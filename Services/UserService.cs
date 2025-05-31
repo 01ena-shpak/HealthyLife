@@ -136,5 +136,19 @@ namespace HealthyLife.Services
             }
         }
 
+        public static void UpdateUserWeight(string username, double weight)
+        {
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                string query = @"UPDATE Users SET Weight = @Weight WHERE Username = @Username";
+                var cmd = new SQLiteCommand(query, connection);
+                cmd.Parameters.AddWithValue("@Weight", weight);
+                cmd.Parameters.AddWithValue("@Username", username);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+
     }
 }

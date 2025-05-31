@@ -2,6 +2,7 @@
 using HealthyLife.Services;
 using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,7 +50,7 @@ namespace HealthyLife.Views
 
             var measurement = new Measurement
             {
-                Username = LoginRegisterPage.CurrentUsername, // логін поточного користувача
+                Username = LoginRegisterPage.CurrentUsername,
                 Date = DateTime.Now.ToString("yyyy-MM-dd"),
                 Weight = double.TryParse(WeightTextBox.Text, out var weight) ? weight : 0,
                 Chest = double.TryParse(ChestTextBox.Text, out var chest) ? chest : 0,
@@ -57,11 +58,17 @@ namespace HealthyLife.Views
                 Hips = double.TryParse(HipsTextBox.Text, out var hips) ? hips : 0
             };
 
+            // Додаємо заміри
             MeasurementService.AddMeasurement(measurement);
-            MessageBox.Show("Заміри збережено!");
 
-            // повернення на щоденник
+            // Оновлюємо тільки вагу користувача (не все з профілю)
+            UserService.UpdateUserWeight(LoginRegisterPage.CurrentUsername, measurement.Weight);
+
+            MessageBox.Show("Заміри збережено та вага профілю оновлена!");
             _mainFrame.Navigate(new DiaryPage(_mainFrame));
         }
+
     }
+
 }
+

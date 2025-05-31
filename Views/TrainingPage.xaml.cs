@@ -32,6 +32,7 @@ namespace HealthyLife.Views
         {
             InitializeComponent();
             _mainFrame = mainFrame;
+            LoadTrainings();
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
