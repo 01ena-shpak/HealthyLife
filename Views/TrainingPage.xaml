@@ -34,7 +34,7 @@
             <Border Background="White" CornerRadius="20" Padding="10" Margin="0,10">
                 <StackPanel>
                     <TextBlock Text="Вид тренування" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,10"/>
-                    <ComboBox Margin="0,5">
+                    <ComboBox x:Name="TypeComboBox" Margin="0,5">
                         <ComboBoxItem Content="Силове"/>
                         <ComboBoxItem Content="Кардіо"/>
                         <ComboBoxItem Content="Йога"/>
@@ -42,12 +42,29 @@
                     </ComboBox>
 
                     <TextBlock Text="Тривалість (хвилини)" FontWeight="SemiBold" Margin="10,10,0,0"/>
-                    <TextBox materialDesign:HintAssist.Hint="Тривалість" Margin="0,5"/>
+                    <TextBox x:Name="DurationTextBox" materialDesign:HintAssist.Hint="Тривалість" Margin="0,5"/>
 
                     <TextBlock Text="Калорії" FontWeight="SemiBold" Margin="10,10,0,0"/>
-                    <TextBox materialDesign:HintAssist.Hint="Калорії" Margin="0,5"/>
+                    <TextBox x:Name="CaloriesTextBox" materialDesign:HintAssist.Hint="Калорії" Margin="0,5"/>
 
-                    <Button Content="Додати тренування" Background="#AED581" Foreground="White" Width="180" Margin="0,10"/>
+                    <Button Content="Додати" Click="AddButton_Click" Background="#AED581" Foreground="White" Width="180" Margin="0,10"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Список тренувань -->
+            <Border Background="White" CornerRadius="20" Padding="10" Margin="0,10">
+                <StackPanel>
+                    <TextBlock Text="Додані тренування" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,10"/>
+                    <ListBox x:Name="TrainingListBox">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel Margin="5">
+                                    <TextBlock Text="{Binding Display}" VerticalAlignment="Center" DockPanel.Dock="Left" Width="250"/>
+                                    <Button Content="-" Click="DeleteButton_Click" Tag="{Binding Id}" Width="40" Height="40" Margin="5,0,0,0" HorizontalAlignment="Right"/>
+                                </DockPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </StackPanel>
             </Border>
         </StackPanel>

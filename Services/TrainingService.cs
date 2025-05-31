@@ -55,5 +55,17 @@ namespace HealthyLife.Services
             }
             return trainings;
         }
+
+        public static void DeleteTraining(int trainingId)
+        {
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                string query = "DELETE FROM Trainings WHERE Id = @Id";
+                var cmd = new SQLiteCommand(query, connection);
+                cmd.Parameters.AddWithValue("@Id", trainingId);
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }

@@ -65,7 +65,7 @@
                     <Border Background="White" CornerRadius="20" Padding="10" Margin="5">
                         <StackPanel>
                             <TextBlock Text="Сніданок" FontWeight="Bold" FontSize="16"/>
-                            <TextBlock Text="0 ккал" Margin="0,5"/>
+                            <TextBlock x:Name="BreakfastSummary" Text="0 ккал" Margin="0,5"/>
                             <Button Content="Додати" Click="BreakfastButton_Click" Background="#FFB74D" Foreground="White"/>
                         </StackPanel>
                     </Border>

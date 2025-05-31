@@ -35,20 +35,30 @@
             <Border Background="White" CornerRadius="20" Padding="10" Margin="0,10">
                 <StackPanel>
                     <TextBlock Text="Додати страву" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,10"/>
-                    <TextBox materialDesign:HintAssist.Hint="Назва страви" Margin="0,5"/>
-                    <TextBox materialDesign:HintAssist.Hint="Калорійність (ккал)" Margin="0,5"/>
-                    <TextBox materialDesign:HintAssist.Hint="Білки (г)" Margin="0,5"/>
-                    <TextBox materialDesign:HintAssist.Hint="Жири (г)" Margin="0,5"/>
-                    <TextBox materialDesign:HintAssist.Hint="Вуглеводи (г)" Margin="0,5"/>
-                    <Button Content="Додати" Background="#FFB74D" Foreground="White" Width="150" Margin="0,10"/>
+                    <TextBox x:Name="DescriptionTextBox" materialDesign:HintAssist.Hint="Назва страви" Margin="0,5"/>
+                    <TextBox x:Name="GramsTextBox" materialDesign:HintAssist.Hint="Вага порції (г)" Margin="0,5"/>
+                    <TextBox x:Name="CaloriesTextBox" materialDesign:HintAssist.Hint="Калорійність (ккал) на 100 г" Margin="0,5"/>
+                    <TextBox x:Name="ProteinsTextBox" materialDesign:HintAssist.Hint="Білки (г) на 100 г" Margin="0,5"/>
+                    <TextBox x:Name="FatsTextBox" materialDesign:HintAssist.Hint="Жири (г) на 100 г" Margin="0,5"/>
+                    <TextBox x:Name="CarbsTextBox" materialDesign:HintAssist.Hint="Вуглеводи (г) на 100 г" Margin="0,5"/>
+                    <Button Content="Додати" Click="AddButton_Click" Background="#FFB74D" Foreground="White" Width="150" Margin="0,10"/>
                 </StackPanel>
             </Border>
 
-            <!-- Список доданих страв (заглушка) -->
+            <!-- Список доданих страв -->
             <Border Background="White" CornerRadius="20" Padding="10" Margin="0,10">
                 <StackPanel>
                     <TextBlock Text="Додані страви" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,10"/>
-                    <TextBlock Text="Тут буде список страв" FontStyle="Italic" Foreground="Gray"/>
+                    <ListBox x:Name="MealsListBox">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel Margin="5">
+                                    <TextBlock Text="{Binding Display}" VerticalAlignment="Center" DockPanel.Dock="Left" Width="250"/>
+                                    <Button Content="-" Click="DeleteButton_Click" Tag="{Binding Id}" Width="40" Height="40" Margin="5,0,0,0" HorizontalAlignment="Right"/>
+                                </DockPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </StackPanel>
             </Border>
         </StackPanel>

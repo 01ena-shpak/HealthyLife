@@ -17,8 +17,8 @@ namespace HealthyLife.Services
             using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
-                string query = @"INSERT INTO Meals (Username, Date, MealType, Description, Calories, Proteins, Fats, Carbs)
-                                 VALUES (@Username, @Date, @MealType, @Description, @Calories, @Proteins, @Fats, @Carbs)";
+                string query = @"INSERT INTO Meals (Username, Date, MealType, Description, Calories, Proteins, Fats, Carbs, Grams)
+                                 VALUES (@Username, @Date, @MealType, @Description, @Calories, @Proteins, @Fats, @Carbs, @Grams)";
                 var cmd = new SQLiteCommand(query, connection);
                 cmd.Parameters.AddWithValue("@Username", meal.Username);
                 cmd.Parameters.AddWithValue("@Date", meal.Date);
@@ -28,6 +28,7 @@ namespace HealthyLife.Services
                 cmd.Parameters.AddWithValue("@Proteins", meal.Proteins);
                 cmd.Parameters.AddWithValue("@Fats", meal.Fats);
                 cmd.Parameters.AddWithValue("@Carbs", meal.Carbs);
+                cmd.Parameters.AddWithValue("@Grams", meal.Grams);
                 cmd.ExecuteNonQuery();
             }
         }
@@ -55,11 +56,24 @@ namespace HealthyLife.Services
                         Calories = double.Parse(reader["Calories"].ToString()),
                         Proteins = double.Parse(reader["Proteins"].ToString()),
                         Fats = double.Parse(reader["Fats"].ToString()),
-                        Carbs = double.Parse(reader["Carbs"].ToString())
+                        Carbs = double.Parse(reader["Carbs"].ToString()),
+                        Grams = double.Parse(reader["Grams"].ToString())
                     });
                 }
             }
             return meals;
         }
+        public static void DeleteMeal(int mealId)
+        {
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                string query = "DELETE FROM Meals WHERE Id = @Id";
+                var cmd = new SQLiteCommand(query, connection);
+                cmd.Parameters.AddWithValue("@Id", mealId);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
     }
 }

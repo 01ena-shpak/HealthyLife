@@ -65,6 +65,5 @@ namespace HealthyLife.Views
         {
             _mainFrame.Navigate(new DashboardPage(_mainFrame));
         }
-
     }
 }
