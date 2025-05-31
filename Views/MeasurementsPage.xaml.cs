@@ -57,11 +57,9 @@ namespace HealthyLife.Views
                 Waist = double.TryParse(WaistTextBox.Text, out var waist) ? waist : 0,
                 Hips = double.TryParse(HipsTextBox.Text, out var hips) ? hips : 0
             };
-
-            // Додаємо заміри
             MeasurementService.AddMeasurement(measurement);
 
-            // Оновлюємо тільки вагу користувача (не все з профілю)
+            // оновлюємо тільки вагу користувача 
             UserService.UpdateUserWeight(LoginRegisterPage.CurrentUsername, measurement.Weight);
 
             MessageBox.Show("Заміри збережено та вага профілю оновлена!");
