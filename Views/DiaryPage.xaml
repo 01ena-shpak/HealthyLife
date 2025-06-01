@@ -33,9 +33,9 @@
             <Grid HorizontalAlignment="Center" Margin="0,10">
                 <Grid Width="250" Height="250">
                     <Ellipse Stroke="#F06292" StrokeThickness="20"/>
-                    <TextBlock x:Name="CaloriesOverText" Text="179" FontSize="36" FontWeight="Bold"
+                    <TextBlock x:Name="CaloriesOverText" FontSize="36" FontWeight="Bold"
                    HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    <TextBlock x:Name="CaloriesStatusText" Text="Ккал залишилось" FontSize="16"
+                    <TextBlock x:Name="CaloriesStatusText" FontSize="16"
                    HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,80"/>
                 </Grid>
 
@@ -46,11 +46,11 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0" HorizontalAlignment="Left">
-                        <TextBlock x:Name="CaloriesEatenText" Text="1910" FontSize="24" FontWeight="Bold"/>
+                        <TextBlock x:Name="CaloriesEatenText" FontSize="24" FontWeight="Bold"/>
                         <TextBlock Text="З’їдено" FontSize="16"/>
                     </StackPanel>
                     <StackPanel Grid.Column="2" HorizontalAlignment="Right">
-                        <TextBlock x:Name="CaloriesBurnedText" Text="297" FontSize="24" FontWeight="Bold"/>
+                        <TextBlock x:Name="CaloriesBurnedText" FontSize="24" FontWeight="Bold"/>
                         <TextBlock Text="Спалено" FontSize="16"/>
                     </StackPanel>
                 </Grid>
@@ -59,21 +59,21 @@
             <!-- Блок БЖУ -->
             <Border Background="White" CornerRadius="20" Padding="10" Margin="0,10">
                 <StackPanel>
-                    <TextBlock Text="Баланс БЖУ за день" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,10"/>
+                    <TextBlock Text="Баланс БЖВ за день" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,10"/>
                     <StackPanel Orientation="Horizontal" Margin="0,5">
                         <TextBlock Text="Вуглеводи" Width="80"/>
-                        <ProgressBar Value="70" Maximum="100" Width="200" Height="10" Foreground="Orange"/>
-                        <TextBlock Text="140/200g" Margin="10,0,0,0"/>
+                        <ProgressBar x:Name="CarbsProgressBar" Width="200" Height="10" Foreground="Orange"/>
+                        <TextBlock x:Name="CarbsText" Margin="10,0,0,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,5">
                         <TextBlock Text="Білки" Width="80"/>
-                        <ProgressBar Value="50" Maximum="100" Width="200" Height="10" Foreground="Pink"/>
-                        <TextBlock Text="50/100g" Margin="10,0,0,0"/>
+                        <ProgressBar x:Name="ProteinsProgressBar" Width="200" Height="10" Foreground="Pink"/>
+                        <TextBlock x:Name="ProteinsText" Margin="10,0,0,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,5">
                         <TextBlock Text="Жири" Width="80"/>
-                        <ProgressBar Value="30" Maximum="100" Width="200" Height="10" Foreground="Purple"/>
-                        <TextBlock Text="30/60g" Margin="10,0,0,0"/>
+                        <ProgressBar x:Name="FatsProgressBar" Width="200" Height="10" Foreground="Purple"/>
+                        <TextBlock x:Name="FatsText" Margin="10,0,0,0"/>
                     </StackPanel>
                 </StackPanel>
             </Border>

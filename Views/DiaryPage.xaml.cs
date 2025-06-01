@@ -39,6 +39,8 @@ namespace HealthyLife.Views
             LoadCurrentWeight();
             LoadMealSummaries();
             LoadTrainingSummary();
+            LoadTotalNutrients();
+            LoadNorms();
         }
 
         private void BreakfastButton_Click(object sender, RoutedEventArgs e)
@@ -144,7 +146,7 @@ namespace HealthyLife.Views
                 var prot = meals.Sum(m => m.Proteins);
                 var fats = meals.Sum(m => m.Fats);
                 var carbs = meals.Sum(m => m.Carbs);
-                textBlock.Text = $"{cal} ккал, {prot}/{fats}/{carbs} БЖУ";
+                textBlock.Text = $"{cal} ккал, {prot}/{fats}/{carbs} БЖВ";
             }
             else
             {
@@ -152,6 +154,68 @@ namespace HealthyLife.Views
             }
         }
 
+        private void LoadTotalNutrients()
+        {
+            var meals = MealService.GetMealsByDate(LoginRegisterPage.CurrentUsername, DateTime.Now.ToString("yyyy-MM-dd"));
+            var totalCarbs = meals.Sum(m => m.Carbs);
+            var totalProteins = meals.Sum(m => m.Proteins);
+            var totalFats = meals.Sum(m => m.Fats);
 
+            // оновлюємо UI
+            CarbsProgressBar.Value = totalCarbs;
+            CarbsText.Text = $"{totalCarbs} g";
+            ProteinsProgressBar.Value = totalProteins;
+            ProteinsText.Text = $"{totalProteins} g";
+            FatsProgressBar.Value = totalFats;
+            FatsText.Text = $"{totalFats} g";
+        }
+
+        private void LoadNorms()
+        {
+            var user = UserService.GetUserByUsername(LoginRegisterPage.CurrentUsername);
+            if (user == null) return;
+
+            // розрахунок норми калорій і бжу
+            double bmr = user.Gender == "Жінка"
+                ? 10 * user.Weight + 6.25 * user.Height - 5 * user.Age - 161
+                : 10 * user.Weight + 6.25 * user.Height - 5 * user.Age + 5;
+
+            double activity = 1.2;
+            if (user.Lifestyle == "Помірний")
+                activity = 1.55;
+            else if (user.Lifestyle == "Активний")
+                activity = 1.725;
+
+            double normCal = bmr * activity;
+            double normProteins = (normCal * 0.3) / 4;
+            double normFats = (normCal * 0.25) / 9;
+            double normCarbs = (normCal * 0.45) / 4;
+
+            // загальний спожиток за день
+            var meals = MealService.GetMealsByDate(LoginRegisterPage.CurrentUsername, DateTime.Now.ToString("yyyy-MM-dd"));
+            double eatenCal = meals.Sum(m => m.Calories);
+            double eatenProt = meals.Sum(m => m.Proteins);
+            double eatenFat = meals.Sum(m => m.Fats);
+            double eatenCarb = meals.Sum(m => m.Carbs);
+
+            var trainings = TrainingService.GetTrainingsByDate(LoginRegisterPage.CurrentUsername, DateTime.Now.ToString("yyyy-MM-dd"));
+            double burnedCal = trainings.Sum(t => t.Calories);
+
+            // оновлення значень
+            CaloriesEatenText.Text = $"{Math.Round(eatenCal)}";
+            CaloriesBurnedText.Text = $"{Math.Round(burnedCal)}";
+            double calLeft = normCal - eatenCal + burnedCal;
+            CaloriesOverText.Text = $"{Math.Round(calLeft)}";
+            CaloriesStatusText.Text = calLeft >= 0 ? "Ккал залишилось" : "З’їдено більше";
+
+            // бжу прогресбари
+            ProteinsProgressBar.Value = Math.Min(100, eatenProt / normProteins * 100);
+            FatsProgressBar.Value = Math.Min(100, eatenFat / normFats * 100);
+            CarbsProgressBar.Value = Math.Min(100, eatenCarb / normCarbs * 100);
+
+            ProteinsText.Text = $"{Math.Round(eatenProt)}/{Math.Round(normProteins)} г";
+            FatsText.Text = $"{Math.Round(eatenFat)}/{Math.Round(normFats)} г";
+            CarbsText.Text = $"{Math.Round(eatenCarb)}/{Math.Round(normCarbs)} г";
+        }
     }
 }

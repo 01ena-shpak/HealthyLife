@@ -29,7 +29,8 @@ namespace HealthyLife.Services
                                             Weight REAL,
                                             Age INTEGER,
                                             Lifestyle TEXT,
-                                            Goal TEXT
+                                            Goal TEXT,
+                                            Gender TEXT
                                         )";
                 SQLiteCommand command = new SQLiteCommand(createTableQuery, connection);
                 command.ExecuteNonQuery();
@@ -42,8 +43,8 @@ namespace HealthyLife.Services
             using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
-                string insertQuery = @"INSERT INTO Users (Username, Email, Password, Height, Weight, Age, Lifestyle)
-                                       VALUES (@Username, @Email, @Password, @Height, @Weight, @Age, @Lifestyle)";
+                string insertQuery = @"INSERT INTO Users (Username, Email, Password, Height, Weight, Age, Lifestyle, Goal, Gender)
+                                       VALUES (@Username, @Email, @Password, @Height, @Weight, @Age, @Lifestyle, @Goal, @Gender)";
                 SQLiteCommand cmd = new SQLiteCommand(insertQuery, connection);
                 cmd.Parameters.AddWithValue("@Username", user.Username);
                 cmd.Parameters.AddWithValue("@Email", user.Email);
@@ -52,7 +53,8 @@ namespace HealthyLife.Services
                 cmd.Parameters.AddWithValue("@Weight", user.Weight);
                 cmd.Parameters.AddWithValue("@Age", user.Age);
                 cmd.Parameters.AddWithValue("@Lifestyle", user.Lifestyle);
-
+                cmd.Parameters.AddWithValue("@Goal", user.Goal);
+                cmd.Parameters.AddWithValue("@Gender", user.Gender);
                 try
                 {
                     cmd.ExecuteNonQuery();
@@ -105,7 +107,8 @@ namespace HealthyLife.Services
                         Weight = Convert.ToDouble(reader["Weight"]),
                         Age = Convert.ToInt32(reader["Age"]),
                         Lifestyle = reader["Lifestyle"].ToString(),
-                        Goal = reader["Goal"].ToString()
+                        Goal = reader["Goal"].ToString(),
+                        Gender = reader["Gender"].ToString()
                     };
                 }
                 return null;
@@ -123,7 +126,8 @@ namespace HealthyLife.Services
                             Weight = @Weight,
                             Age = @Age,
                             Lifestyle = @Lifestyle,
-                            Goal = @Goal
+                            Goal = @Goal,
+                            Gender = @Gender
                          WHERE Username = @Username";
                 var cmd = new SQLiteCommand(query, connection);
                 cmd.Parameters.AddWithValue("@Height", user.Height);
@@ -131,6 +135,7 @@ namespace HealthyLife.Services
                 cmd.Parameters.AddWithValue("@Age", user.Age);
                 cmd.Parameters.AddWithValue("@Lifestyle", user.Lifestyle);
                 cmd.Parameters.AddWithValue("@Goal", user.Goal);
+                cmd.Parameters.AddWithValue("@Gender", user.Gender);
                 cmd.Parameters.AddWithValue("@Username", user.Username);
                 cmd.ExecuteNonQuery();
             }

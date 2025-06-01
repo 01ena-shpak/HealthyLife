@@ -40,6 +40,12 @@
                     <TextBlock Text="Вага (кг)" FontWeight="SemiBold" Margin="10,0,0,0"/>
                     <TextBox x:Name="WeightTextBox" materialDesign:HintAssist.Hint="Введіть вагу" Margin="0,5"/>
 
+                    <TextBlock Text="Стать" FontWeight="SemiBold" Margin="10,0,0,0"/>
+                    <ComboBox x:Name="GenderComboBox" Margin="0,5">
+                        <ComboBoxItem Content="Чоловік"/>
+                        <ComboBoxItem Content="Жінка"/>
+                    </ComboBox>
+
                     <TextBlock Text="Рівень активності" FontWeight="SemiBold" Margin="10,0,0,0"/>
                     <ComboBox x:Name="ActivityComboBox" Margin="0,5">
                         <ComboBoxItem Content="Сидячий"/>

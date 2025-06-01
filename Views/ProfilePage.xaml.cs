@@ -71,6 +71,15 @@ namespace HealthyLife.Views
                         break;
                     }
                 }
+
+                foreach (ComboBoxItem item in GenderComboBox.Items)
+                {
+                    if (item.Content.ToString() == user.Gender)
+                    {
+                        GenderComboBox.SelectedItem = item;
+                        break;
+                    }
+                }
             }
         }
 
@@ -83,7 +92,8 @@ namespace HealthyLife.Views
                 Height = double.TryParse(HeightTextBox.Text, out var height) ? height : 0,
                 Weight = double.TryParse(WeightTextBox.Text, out var weight) ? weight : 0,
                 Lifestyle = (ActivityComboBox.SelectedItem as ComboBoxItem)?.Content.ToString(),
-                Goal = (GoalComboBox.SelectedItem as ComboBoxItem)?.Content.ToString()
+                Goal = (GoalComboBox.SelectedItem as ComboBoxItem)?.Content.ToString(),
+                Gender = (GenderComboBox.SelectedItem as ComboBoxItem)?.Content.ToString()
             };
 
             Services.UserService.UpdateUserProfile(user);

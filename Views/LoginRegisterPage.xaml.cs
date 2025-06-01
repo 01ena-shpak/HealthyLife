@@ -142,7 +142,9 @@ namespace HealthyLife.Views
                 Height = 0,
                 Weight = 0,
                 Age = 0,
-                Lifestyle = "Не визначено"
+                Lifestyle = "Не визначено",
+                Goal = "Не визначено",
+                Gender = "Не визначено"
             };
 
             if (Services.UserService.RegisterUser(user))
