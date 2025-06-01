@@ -30,7 +30,15 @@ namespace HealthyLife.Views
         {
             InitializeComponent();
             _mainFrame = mainFrame;
+            this.Loaded += Page_Loaded;
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
             LoadWaterAmount();
+            LoadCurrentWeight();
+            LoadMealSummaries();
+            LoadTrainingSummary();
         }
 
         private void BreakfastButton_Click(object sender, RoutedEventArgs e)
@@ -91,5 +99,59 @@ namespace HealthyLife.Views
             currentWaterAmount = WaterIntakeService.GetWaterAmountByDate(LoginRegisterPage.CurrentUsername, DateTime.Now.ToString("yyyy-MM-dd"));
             WaterAmountText.Text = $"{currentWaterAmount} мл";
         }
+
+        private void LoadCurrentWeight()
+        {
+            var user = UserService.GetUserByUsername(LoginRegisterPage.CurrentUsername);
+            if (user != null)
+            {
+                CurrentWeightText.Text = user.Weight > 0 ? $"{user.Weight} кг" : "Немає запису";
+            }
+        }
+
+        private void LoadTrainingSummary()
+        {
+            var trainings = TrainingService.GetTrainingsByDate(LoginRegisterPage.CurrentUsername, DateTime.Now.ToString("yyyy-MM-dd"));
+            if (trainings.Any())
+            {
+                var totalCalories = trainings.Sum(t => t.Calories);
+                var totalDuration = trainings.Sum(t => t.Duration);
+                TrainingSummaryText.Text = $"{totalDuration} хв, {totalCalories} ккал";
+            }
+            else
+            {
+                TrainingSummaryText.Text = "Немає запису";
+            }
+        }
+
+        private void LoadMealSummaries()
+        {
+            var meals = MealService.GetMealsByDate(LoginRegisterPage.CurrentUsername, DateTime.Now.ToString("yyyy-MM-dd"));
+
+            LoadMealSummary("Сніданок", BreakfastSummary);
+            LoadMealSummary("Обід", LunchSummary);
+            LoadMealSummary("Вечеря", DinnerSummary);
+            LoadMealSummary("Перекус", SnackSummary);
+        }
+
+        private void LoadMealSummary(string mealType, TextBlock textBlock)
+        {
+            var meals = MealService.GetMealsByDate(LoginRegisterPage.CurrentUsername, DateTime.Now.ToString("yyyy-MM-dd"))
+                        .Where(m => m.MealType == mealType);
+            if (meals.Any())
+            {
+                var cal = meals.Sum(m => m.Calories);
+                var prot = meals.Sum(m => m.Proteins);
+                var fats = meals.Sum(m => m.Fats);
+                var carbs = meals.Sum(m => m.Carbs);
+                textBlock.Text = $"{cal} ккал, {prot}/{fats}/{carbs} БЖУ";
+            }
+            else
+            {
+                textBlock.Text = "0 ккал";
+            }
+        }
+
+
     }
 }
