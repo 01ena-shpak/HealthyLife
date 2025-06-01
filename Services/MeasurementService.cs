@@ -57,5 +57,34 @@ namespace HealthyLife.Services
             }
             return measurements;
         }
+
+        public static List<Measurement> GetMeasurementsByDateRange(string username, DateTime startDate, DateTime endDate)
+        {
+            var measurements = new List<Measurement>();
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                string query = @"SELECT * FROM Measurements WHERE Username = @Username AND Date BETWEEN @StartDate AND @EndDate";
+                var cmd = new SQLiteCommand(query, connection);
+                cmd.Parameters.AddWithValue("@Username", username);
+                cmd.Parameters.AddWithValue("@StartDate", startDate.ToString("yyyy-MM-dd"));
+                cmd.Parameters.AddWithValue("@EndDate", endDate.ToString("yyyy-MM-dd"));
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    measurements.Add(new Measurement
+                    {
+                        Id = (int)(long)reader["Id"],
+                        Username = reader["Username"].ToString(),
+                        Date = reader["Date"].ToString(),
+                        Weight = double.Parse(reader["Weight"].ToString()),
+                        Chest = double.Parse(reader["Chest"].ToString()),
+                        Waist = double.Parse(reader["Waist"].ToString()),
+                        Hips = double.Parse(reader["Hips"].ToString())
+                    });
+                }
+            }
+            return measurements;
+        }
     }
 }

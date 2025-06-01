@@ -98,5 +98,30 @@ namespace HealthyLife.Services
             }
         }
 
+        public static List<WaterIntake> GetWaterIntakeByDateRange(string username, DateTime startDate, DateTime endDate)
+        {
+            var waterList = new List<WaterIntake>();
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                string query = @"SELECT * FROM WaterIntake WHERE Username = @Username AND Date BETWEEN @StartDate AND @EndDate";
+                var cmd = new SQLiteCommand(query, connection);
+                cmd.Parameters.AddWithValue("@Username", username);
+                cmd.Parameters.AddWithValue("@StartDate", startDate.ToString("yyyy-MM-dd"));
+                cmd.Parameters.AddWithValue("@EndDate", endDate.ToString("yyyy-MM-dd"));
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    waterList.Add(new WaterIntake
+                    {
+                        Id = (int)(long)reader["Id"],
+                        Username = reader["Username"].ToString(),
+                        Date = reader["Date"].ToString(),
+                        Amount = double.Parse(reader["Amount"].ToString())
+                    });
+                }
+            }
+            return waterList;
+        }
     }
 }

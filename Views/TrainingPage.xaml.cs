@@ -61,8 +61,8 @@ namespace HealthyLife.Views
 
             TrainingService.AddTraining(training);
             MessageBox.Show("Тренування додано!");
-            ClearFields();
             LoadTrainings();
+            ClearFields();
         }
 
         private void ClearFields()
@@ -74,7 +74,7 @@ namespace HealthyLife.Views
 
         private void LoadTrainings()
         {
-            var trainings = TrainingService.GetTrainingsByDate(LoginRegisterPage.CurrentUsername, DateTime.Now.ToString("yyyy-MM-dd"))
+            var trainings = TrainingService.GetTrainingsByDate(LoginRegisterPage.CurrentUsername, _selectedDate)
                            .Select(t => new
                            {
                                Id = t.Id,

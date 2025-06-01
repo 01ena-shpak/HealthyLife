@@ -67,5 +67,33 @@ namespace HealthyLife.Services
                 cmd.ExecuteNonQuery();
             }
         }
+
+        public static List<Training> GetTrainingsByDateRange(string username, DateTime startDate, DateTime endDate)
+        {
+            var trainings = new List<Training>();
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                string query = @"SELECT * FROM Trainings WHERE Username = @Username AND Date BETWEEN @StartDate AND @EndDate";
+                var cmd = new SQLiteCommand(query, connection);
+                cmd.Parameters.AddWithValue("@Username", username);
+                cmd.Parameters.AddWithValue("@StartDate", startDate.ToString("yyyy-MM-dd"));
+                cmd.Parameters.AddWithValue("@EndDate", endDate.ToString("yyyy-MM-dd"));
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    trainings.Add(new Training
+                    {
+                        Id = (int)(long)reader["Id"],
+                        Username = reader["Username"].ToString(),
+                        Date = reader["Date"].ToString(),
+                        Type = reader["Type"].ToString(),
+                        Duration = double.Parse(reader["Duration"].ToString()),
+                        Calories = double.Parse(reader["Calories"].ToString())
+                    });
+                }
+            }
+            return trainings;
+        }
     }
 }

@@ -101,7 +101,10 @@
     <Compile Include="Services\TrainingService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Services\WaterIntakeService.cs" />
-    <Compile Include="Services\WaterService.cs" />
+    <Compile Include="Strategies\AllTimeStrategy.cs" />
+    <Compile Include="Strategies\IStatsStrategy.cs" />
+    <Compile Include="Strategies\MonthStrategy.cs" />
+    <Compile Include="Strategies\WeekStrategy.cs" />
     <Compile Include="Views\DashboardPage.xaml.cs">
       <DependentUpon>DashboardPage.xaml</DependentUpon>
     </Compile>
