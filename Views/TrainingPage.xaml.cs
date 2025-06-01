@@ -23,15 +23,17 @@ namespace HealthyLife.Views
     public partial class TrainingPage : Page
     {
         private Frame _mainFrame;
+        private string _selectedDate;
         public TrainingPage()
         {
             InitializeComponent();
         }
 
-        public TrainingPage(Frame mainFrame)
+        public TrainingPage(Frame mainFrame, string selectedDate)
         {
             InitializeComponent();
             _mainFrame = mainFrame;
+            _selectedDate = selectedDate;
             LoadTrainings();
         }
 
@@ -51,7 +53,7 @@ namespace HealthyLife.Views
             var training = new Training
             {
                 Username = LoginRegisterPage.CurrentUsername,
-                Date = DateTime.Now.ToString("yyyy-MM-dd"),
+                Date = _selectedDate,
                 Type = (TypeComboBox.SelectedItem as ComboBoxItem).Content.ToString(),
                 Duration = double.TryParse(DurationTextBox.Text, out var duration) ? duration : 0,
                 Calories = double.TryParse(CaloriesTextBox.Text, out var calories) ? calories : 0

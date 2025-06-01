@@ -24,15 +24,17 @@ namespace HealthyLife.Views
     public partial class MeasurementsPage : Page
     {
         private Frame _mainFrame;
+        private string _selectedDate;
         public MeasurementsPage()
         {
             InitializeComponent();
         }
 
-        public MeasurementsPage(Frame mainFrame)
+        public MeasurementsPage(Frame mainFrame, string selectedDate)
         {
             InitializeComponent();
             _mainFrame = mainFrame;
+            _selectedDate = selectedDate;
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -51,7 +53,7 @@ namespace HealthyLife.Views
             var measurement = new Measurement
             {
                 Username = LoginRegisterPage.CurrentUsername,
-                Date = DateTime.Now.ToString("yyyy-MM-dd"),
+                Date = _selectedDate,
                 Weight = double.TryParse(WeightTextBox.Text, out var weight) ? weight : 0,
                 Chest = double.TryParse(ChestTextBox.Text, out var chest) ? chest : 0,
                 Waist = double.TryParse(WaistTextBox.Text, out var waist) ? waist : 0,

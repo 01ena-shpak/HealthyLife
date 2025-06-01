@@ -24,16 +24,19 @@ namespace HealthyLife.Views
     {
         private Frame _mainFrame;
         private string _mealType;
+        private string _selectedDate;
+
         public MealPage()
         {
             InitializeComponent();
         }
 
-        public MealPage(Frame mainFrame, string mealType)
+        public MealPage(Frame mainFrame, string mealType, string selectedDate)
         {
             InitializeComponent();
             _mainFrame = mainFrame;
             _mealType = mealType;
+            _selectedDate = selectedDate;
             MealTitle.Text = mealType;
             LoadMeals();
         }
@@ -61,14 +64,14 @@ namespace HealthyLife.Views
                 return;
             }
 
-            // Зчитування ваги порції
+            // зчитування ваги порції
             var grams = double.TryParse(GramsTextBox.Text, out var gr) ? gr : 100;
 
-            // Розрахунок кбжу на основі введеної ваги
+            // розрахунок кбжу на основі введеної ваги
             var meal = new Meal
             {
                 Username = LoginRegisterPage.CurrentUsername,
-                Date = DateTime.Now.ToString("yyyy-MM-dd"),
+                Date = _selectedDate,
                 MealType = _mealType,
                 Description = DescriptionTextBox.Text,
                 Grams = grams,
@@ -86,12 +89,12 @@ namespace HealthyLife.Views
 
         private void LoadMeals()
         {
-            var meals = MealService.GetMealsByDate(LoginRegisterPage.CurrentUsername, DateTime.Now.ToString("yyyy-MM-dd"))
+            var meals = MealService.GetMealsByDate(LoginRegisterPage.CurrentUsername, _selectedDate)
                            .Where(m => m.MealType == _mealType)
                            .Select(m => new
                            {
                                Id = m.Id,
-                               Display = $"{m.Description}: {m.Calories} ккал, {m.Proteins}/{m.Fats}/{m.Carbs} БЖУ, {m.Grams} г"
+                               Display = $"{m.Description}: {m.Calories} ккал, {m.Proteins}/{m.Fats}/{m.Carbs} БЖВ, {m.Grams} г"
                            }).ToList();
 
             MealsListBox.ItemsSource = meals;

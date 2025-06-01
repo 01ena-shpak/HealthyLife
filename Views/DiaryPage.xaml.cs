@@ -33,44 +33,70 @@ namespace HealthyLife.Views
             this.Loaded += Page_Loaded;
         }
 
+        private DateTime selectedDate = DateTime.Now;
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            UpdateDateDisplay();
+            LoadAllDataForDate();
+        }
+
+        private void PreviousDate_Click(object sender, RoutedEventArgs e)
+        {
+            selectedDate = selectedDate.AddDays(-1);
+            UpdateDateDisplay();
+            LoadAllDataForDate();
+        }
+
+        private void NextDate_Click(object sender, RoutedEventArgs e)
+        {
+            selectedDate = selectedDate.AddDays(1);
+            UpdateDateDisplay();
+            LoadAllDataForDate();
+        }
+
+        private void UpdateDateDisplay()
+        {
+            SelectedDateText.Text = selectedDate.ToString("dd MMMM yyyy");
+        }
+
+        private void LoadAllDataForDate()
         {
             LoadWaterAmount();
             LoadCurrentWeight();
             LoadMealSummaries();
             LoadTrainingSummary();
-            LoadTotalNutrients();
             LoadNorms();
         }
 
         private void BreakfastButton_Click(object sender, RoutedEventArgs e)
         {
-            _mainFrame.Navigate(new MealPage(_mainFrame, "Сніданок"));
+            _mainFrame.Navigate(new MealPage(_mainFrame, "Сніданок", selectedDate.ToString("yyyy-MM-dd")));
         }
 
         private void LunchButton_Click(object sender, RoutedEventArgs e)
         {
-            _mainFrame.Navigate(new MealPage(_mainFrame, "Обід"));
+            _mainFrame.Navigate(new MealPage(_mainFrame, "Обід", selectedDate.ToString("yyyy-MM-dd")));
         }
 
         private void DinnerButton_Click(object sender, RoutedEventArgs e)
         {
-            _mainFrame.Navigate(new MealPage(_mainFrame, "Вечеря"));
+            _mainFrame.Navigate(new MealPage(_mainFrame, "Вечеря", selectedDate.ToString("yyyy-MM-dd")));
         }
 
         private void SnackButton_Click(object sender, RoutedEventArgs e)
         {
-            _mainFrame.Navigate(new MealPage(_mainFrame, "Перекус"));
+            _mainFrame.Navigate(new MealPage(_mainFrame, "Перекус", selectedDate.ToString("yyyy-MM-dd")));
         }
 
         private void TrainingButton_Click(object sender, RoutedEventArgs e)
         {
-            _mainFrame.Navigate(new TrainingPage(_mainFrame));
+            _mainFrame.Navigate(new TrainingPage(_mainFrame, selectedDate.ToString("yyyy-MM-dd")));
         }
 
         private void MeasurementsButton_Click(object sender, RoutedEventArgs e)
         {
-            _mainFrame.Navigate(new MeasurementsPage(_mainFrame));
+            _mainFrame.Navigate(new MeasurementsPage(_mainFrame, selectedDate.ToString("yyyy-MM-dd")));
         }
 
         private void BackToDashboard_Click(object sender, RoutedEventArgs e)
@@ -84,7 +110,7 @@ namespace HealthyLife.Views
         {
             currentWaterAmount += 250;
             WaterAmountText.Text = $"{currentWaterAmount} мл";
-            WaterIntakeService.UpdateWaterIntake(LoginRegisterPage.CurrentUsername, DateTime.Now.ToString("yyyy-MM-dd"), currentWaterAmount);
+            WaterIntakeService.UpdateWaterIntake(LoginRegisterPage.CurrentUsername, selectedDate.ToString("yyyy-MM-dd"), currentWaterAmount);
         }
 
         private void MinusWaterButton_Click(object sender, RoutedEventArgs e)
@@ -93,12 +119,12 @@ namespace HealthyLife.Views
             {
                 currentWaterAmount -= 250;
                 WaterAmountText.Text = $"{currentWaterAmount} мл";
-                WaterIntakeService.UpdateWaterIntake(LoginRegisterPage.CurrentUsername, DateTime.Now.ToString("yyyy-MM-dd"), currentWaterAmount);
+                WaterIntakeService.UpdateWaterIntake(LoginRegisterPage.CurrentUsername, selectedDate.ToString("yyyy-MM-dd"), currentWaterAmount);
             }
         }
         private void LoadWaterAmount()
         {
-            currentWaterAmount = WaterIntakeService.GetWaterAmountByDate(LoginRegisterPage.CurrentUsername, DateTime.Now.ToString("yyyy-MM-dd"));
+            currentWaterAmount = WaterIntakeService.GetWaterAmountByDate(LoginRegisterPage.CurrentUsername, selectedDate.ToString("yyyy-MM-dd"));
             WaterAmountText.Text = $"{currentWaterAmount} мл";
         }
 
@@ -113,7 +139,7 @@ namespace HealthyLife.Views
 
         private void LoadTrainingSummary()
         {
-            var trainings = TrainingService.GetTrainingsByDate(LoginRegisterPage.CurrentUsername, DateTime.Now.ToString("yyyy-MM-dd"));
+            var trainings = TrainingService.GetTrainingsByDate(LoginRegisterPage.CurrentUsername, selectedDate.ToString("yyyy-MM-dd"));
             if (trainings.Any())
             {
                 var totalCalories = trainings.Sum(t => t.Calories);
@@ -128,7 +154,7 @@ namespace HealthyLife.Views
 
         private void LoadMealSummaries()
         {
-            var meals = MealService.GetMealsByDate(LoginRegisterPage.CurrentUsername, DateTime.Now.ToString("yyyy-MM-dd"));
+            var meals = MealService.GetMealsByDate(LoginRegisterPage.CurrentUsername, selectedDate.ToString("yyyy-MM-dd"));
 
             LoadMealSummary("Сніданок", BreakfastSummary);
             LoadMealSummary("Обід", LunchSummary);
@@ -138,7 +164,7 @@ namespace HealthyLife.Views
 
         private void LoadMealSummary(string mealType, TextBlock textBlock)
         {
-            var meals = MealService.GetMealsByDate(LoginRegisterPage.CurrentUsername, DateTime.Now.ToString("yyyy-MM-dd"))
+            var meals = MealService.GetMealsByDate(LoginRegisterPage.CurrentUsername, selectedDate.ToString("yyyy-MM-dd"))
                         .Where(m => m.MealType == mealType);
             if (meals.Any())
             {
@@ -156,7 +182,7 @@ namespace HealthyLife.Views
 
         private void LoadTotalNutrients()
         {
-            var meals = MealService.GetMealsByDate(LoginRegisterPage.CurrentUsername, DateTime.Now.ToString("yyyy-MM-dd"));
+            var meals = MealService.GetMealsByDate(LoginRegisterPage.CurrentUsername, selectedDate.ToString("yyyy-MM-dd"));
             var totalCarbs = meals.Sum(m => m.Carbs);
             var totalProteins = meals.Sum(m => m.Proteins);
             var totalFats = meals.Sum(m => m.Fats);
@@ -192,13 +218,13 @@ namespace HealthyLife.Views
             double normCarbs = (normCal * 0.45) / 4;
 
             // загальний спожиток за день
-            var meals = MealService.GetMealsByDate(LoginRegisterPage.CurrentUsername, DateTime.Now.ToString("yyyy-MM-dd"));
+            var meals = MealService.GetMealsByDate(LoginRegisterPage.CurrentUsername, selectedDate.ToString("yyyy-MM-dd"));
             double eatenCal = meals.Sum(m => m.Calories);
             double eatenProt = meals.Sum(m => m.Proteins);
             double eatenFat = meals.Sum(m => m.Fats);
             double eatenCarb = meals.Sum(m => m.Carbs);
 
-            var trainings = TrainingService.GetTrainingsByDate(LoginRegisterPage.CurrentUsername, DateTime.Now.ToString("yyyy-MM-dd"));
+            var trainings = TrainingService.GetTrainingsByDate(LoginRegisterPage.CurrentUsername, selectedDate.ToString("yyyy-MM-dd"));
             double burnedCal = trainings.Sum(t => t.Calories);
 
             // оновлення значень
