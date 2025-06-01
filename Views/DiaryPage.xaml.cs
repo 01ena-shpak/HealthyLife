@@ -187,7 +187,7 @@ namespace HealthyLife.Views
             var totalProteins = meals.Sum(m => m.Proteins);
             var totalFats = meals.Sum(m => m.Fats);
 
-            // оновлюємо UI
+            // оновлюємо 
             CarbsProgressBar.Value = totalCarbs;
             CarbsText.Text = $"{totalCarbs} g";
             ProteinsProgressBar.Value = totalProteins;

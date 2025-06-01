@@ -37,7 +37,7 @@ namespace HealthyLife.Views
         {
             InitializeComponent();
             _mainFrame = mainFrame;
-            _currentStrategy = new WeekStrategy(); // за замовчуванням встановимо стратегію на тиждень
+            _currentStrategy = new WeekStrategy(); // за на тиждень
             LoadStats();
         }
 
@@ -48,7 +48,6 @@ namespace HealthyLife.Views
 
         private void PeriodComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // змінюємо стратегію в залежності від вибору
             if (PeriodComboBox.SelectedIndex == 0)
                 _currentStrategy = new WeekStrategy();
             else if (PeriodComboBox.SelectedIndex == 1)
@@ -68,7 +67,7 @@ namespace HealthyLife.Views
             var trainings = TrainingService.GetTrainingsByDateRange(username, _currentStrategy.StartDate, _currentStrategy.EndDate);
             var measurements = MeasurementService.GetMeasurementsByDateRange(username, _currentStrategy.StartDate, _currentStrategy.EndDate);
 
-            // Групування для графіків
+            // групування для графіків
             CaloriesChart.Content = CreatePlot(
                 meals.GroupBy(m => m.Date)
                      .Select(g => new DataPoint(DateTimeAxis.ToDouble(DateTime.Parse(g.Key)), g.Sum(m => m.Calories))),
@@ -94,12 +93,24 @@ namespace HealthyLife.Views
 
         private PlotView CreatePlot(IEnumerable<DataPoint> dataPoints, string title)
         {
-            var model = new PlotModel { Title = title };
-            model.Axes.Add(new DateTimeAxis { Position = AxisPosition.Bottom, StringFormat = "dd.MM" });
+            var model = new PlotModel { Title = $"Графік {title}" };
+            model.Axes.Add(new DateTimeAxis
+            {
+                Position = AxisPosition.Bottom,
+                StringFormat = "dd.MM",
+                IntervalType = DateTimeIntervalType.Days,
+                MinorIntervalType = DateTimeIntervalType.Days
+            });
             model.Axes.Add(new LinearAxis { Position = AxisPosition.Left });
 
-            var series = new LineSeries();
-            series.Points.AddRange(dataPoints);
+            var series = new LineSeries
+            {
+                Color = OxyColors.Green,
+                StrokeThickness = 2,
+                MarkerType = MarkerType.Circle,
+                MarkerSize = 3
+            };
+            series.Points.AddRange(dataPoints.OrderBy(p => p.X));
             model.Series.Add(series);
 
             return new OxyPlot.Wpf.PlotView { Model = model, Height = 300 };
@@ -109,11 +120,21 @@ namespace HealthyLife.Views
         {
             var model = new PlotModel { Title = "Груди/Талія/Стегна" };
 
-            var chestSeries = new LineSeries { Title = "Груди" };
-            var waistSeries = new LineSeries { Title = "Талія" };
-            var hipsSeries = new LineSeries { Title = "Стегна" };
+            var chestSeries = new LineSeries { Title = "Груди", Color = OxyColors.Red, MarkerType = MarkerType.Circle };
+            var waistSeries = new LineSeries { Title = "Талія", Color = OxyColors.Orange, MarkerType = MarkerType.Circle };
+            var hipsSeries = new LineSeries { Title = "Стегна", Color = OxyColors.Green, MarkerType = MarkerType.Circle };
 
-            foreach (var m in measurements)
+            var grouped = measurements
+                .Select(m => new
+                {
+                    Date = DateTime.Parse(m.Date).Date,  // лише дата без часу
+                    Measurement = m
+                })
+                .GroupBy(x => x.Date)
+                .Select(g => g.OrderByDescending(x => x.Measurement.Id).First().Measurement)
+                .OrderBy(m => DateTime.Parse(m.Date).Date);  // сортуємо за датою
+
+            foreach (var m in grouped)
             {
                 var dateX = DateTimeAxis.ToDouble(DateTime.Parse(m.Date));
                 chestSeries.Points.Add(new DataPoint(dateX, m.Chest));
@@ -124,6 +145,8 @@ namespace HealthyLife.Views
             model.Series.Add(chestSeries);
             model.Series.Add(waistSeries);
             model.Series.Add(hipsSeries);
+            model.Axes.Add(new DateTimeAxis { Position = AxisPosition.Bottom, StringFormat = "dd.MM", MajorGridlineStyle = LineStyle.Solid });
+            model.Axes.Add(new LinearAxis { Position = AxisPosition.Left, MajorGridlineStyle = LineStyle.Solid });
 
             return new OxyPlot.Wpf.PlotView { Model = model, Height = 300 };
         }

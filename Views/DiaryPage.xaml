@@ -131,8 +131,6 @@
                     </StackPanel>
                 </StackPanel>
             </Border>
-            
-
 
             <!-- Блок тренування -->
             <Border Background="White" CornerRadius="20" Padding="10" Margin="0,10">
