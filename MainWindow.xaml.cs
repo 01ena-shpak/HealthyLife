@@ -23,7 +23,6 @@ namespace HealthyLife
         public MainWindow()
         {
             InitializeComponent();
-            HealthyLife.Services.UserService.InitializeDatabase(); // ініціалізуємо БД
             MainFrame.Navigate(new Views.LoginRegisterPage(MainFrame));
         }
     }

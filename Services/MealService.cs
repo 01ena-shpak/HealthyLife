@@ -43,26 +43,29 @@ namespace HealthyLife.Services
                 var cmd = new SQLiteCommand(query, connection);
                 cmd.Parameters.AddWithValue("@Username", username);
                 cmd.Parameters.AddWithValue("@Date", date);
-                var reader = cmd.ExecuteReader();
-                while (reader.Read())
+                using (var reader = cmd.ExecuteReader())
                 {
-                    meals.Add(new Meal
+                    while (reader.Read())
                     {
-                        Id = (int)(long)reader["Id"],
-                        Username = reader["Username"].ToString(),
-                        Date = reader["Date"].ToString(),
-                        MealType = reader["MealType"].ToString(),
-                        Description = reader["Description"].ToString(),
-                        Calories = double.Parse(reader["Calories"].ToString()),
-                        Proteins = double.Parse(reader["Proteins"].ToString()),
-                        Fats = double.Parse(reader["Fats"].ToString()),
-                        Carbs = double.Parse(reader["Carbs"].ToString()),
-                        Grams = double.Parse(reader["Grams"].ToString())
-                    });
+                        meals.Add(new Meal
+                        {
+                            Id = (int)(long)reader["Id"],
+                            Username = reader["Username"].ToString(),
+                            Date = reader["Date"].ToString(),
+                            MealType = reader["MealType"].ToString(),
+                            Description = reader["Description"].ToString(),
+                            Calories = double.Parse(reader["Calories"].ToString()),
+                            Proteins = double.Parse(reader["Proteins"].ToString()),
+                            Fats = double.Parse(reader["Fats"].ToString()),
+                            Carbs = double.Parse(reader["Carbs"].ToString()),
+                            Grams = double.Parse(reader["Grams"].ToString())
+                        });
+                    }
                 }
             }
             return meals;
         }
+
         public static void DeleteMeal(int mealId)
         {
             using (var connection = new SQLiteConnection(connectionString))
@@ -86,22 +89,24 @@ namespace HealthyLife.Services
                 cmd.Parameters.AddWithValue("@Username", username);
                 cmd.Parameters.AddWithValue("@StartDate", startDate.ToString("yyyy-MM-dd"));
                 cmd.Parameters.AddWithValue("@EndDate", endDate.ToString("yyyy-MM-dd"));
-                var reader = cmd.ExecuteReader();
-                while (reader.Read())
+                using (var reader = cmd.ExecuteReader())
                 {
-                    meals.Add(new Meal
+                    while (reader.Read())
                     {
-                        Id = (int)(long)reader["Id"],
-                        Username = reader["Username"].ToString(),
-                        Date = reader["Date"].ToString(),
-                        MealType = reader["MealType"].ToString(),
-                        Description = reader["Description"].ToString(),
-                        Calories = double.Parse(reader["Calories"].ToString()),
-                        Proteins = double.Parse(reader["Proteins"].ToString()),
-                        Fats = double.Parse(reader["Fats"].ToString()),
-                        Carbs = double.Parse(reader["Carbs"].ToString()),
-                        Grams = double.Parse(reader["Grams"].ToString())
-                    });
+                        meals.Add(new Meal
+                        {
+                            Id = (int)(long)reader["Id"],
+                            Username = reader["Username"].ToString(),
+                            Date = reader["Date"].ToString(),
+                            MealType = reader["MealType"].ToString(),
+                            Description = reader["Description"].ToString(),
+                            Calories = double.Parse(reader["Calories"].ToString()),
+                            Proteins = double.Parse(reader["Proteins"].ToString()),
+                            Fats = double.Parse(reader["Fats"].ToString()),
+                            Carbs = double.Parse(reader["Carbs"].ToString()),
+                            Grams = double.Parse(reader["Grams"].ToString())
+                        });
+                    }
                 }
             }
             return meals;

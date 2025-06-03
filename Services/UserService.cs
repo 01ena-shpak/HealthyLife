@@ -11,33 +11,8 @@ namespace HealthyLife.Services
 {
     public class UserService
     {
-        // шлях до бази даних
         private static string connectionString = "Data Source=users.db";
 
-        // ініціалізація таблиці (створення, якщо не існує)
-        public static void InitializeDatabase()
-        {
-            using (var connection = new SQLiteConnection(connectionString))
-            {
-                connection.Open();
-                string createTableQuery = @"CREATE TABLE IF NOT EXISTS Users (
-                                            Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                            Username TEXT NOT NULL UNIQUE,
-                                            Email TEXT NOT NULL,
-                                            Password TEXT NOT NULL,
-                                            Height REAL,
-                                            Weight REAL,
-                                            Age INTEGER,
-                                            Lifestyle TEXT,
-                                            Goal TEXT,
-                                            Gender TEXT
-                                        )";
-                SQLiteCommand command = new SQLiteCommand(createTableQuery, connection);
-                command.ExecuteNonQuery();
-            }
-        }
-
-        // реєстрація нового користувача
         public static bool RegisterUser(User user)
         {
             using (var connection = new SQLiteConnection(connectionString))
@@ -69,7 +44,6 @@ namespace HealthyLife.Services
             }
         }
         
-        // перевірка авторизації користувача
         public static bool AuthenticateUser(string username, string password)
         {
             using (var connection = new SQLiteConnection(connectionString))
@@ -84,7 +58,6 @@ namespace HealthyLife.Services
             }
         }
 
-        // отримання даних користувача з логіки
         public static User GetUserByUsername(string username)
         {
             using (var connection = new SQLiteConnection(connectionString))
@@ -115,7 +88,6 @@ namespace HealthyLife.Services
             }
         }
 
-        // оновлення профілю користувача
         public static void UpdateUserProfile(User user)
         {
             using (var connection = new SQLiteConnection(connectionString))
@@ -153,7 +125,5 @@ namespace HealthyLife.Services
                 cmd.ExecuteNonQuery();
             }
         }
-
-
     }
 }
