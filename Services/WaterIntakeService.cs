@@ -27,31 +27,6 @@ namespace HealthyLife.Services
             }
         }
 
-        public static List<WaterIntake> GetWaterIntakeByDate(string username, string date)
-        {
-            var waterList = new List<WaterIntake>();
-            using (var connection = new SQLiteConnection(connectionString))
-            {
-                connection.Open();
-                string query = "SELECT * FROM WaterIntake WHERE Username = @Username AND Date = @Date";
-                var cmd = new SQLiteCommand(query, connection);
-                cmd.Parameters.AddWithValue("@Username", username);
-                cmd.Parameters.AddWithValue("@Date", date);
-                var reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    waterList.Add(new WaterIntake
-                    {
-                        Id = (int)(long)reader["Id"],
-                        Username = reader["Username"].ToString(),
-                        Date = reader["Date"].ToString(),
-                        Amount = double.Parse(reader["Amount"].ToString())
-                    });
-                }
-            }
-            return waterList;
-        }
-
         public static void UpdateWaterIntake(string username, string date, double amount)
         {
             using (var connection = new SQLiteConnection(connectionString))
