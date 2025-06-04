@@ -67,8 +67,6 @@ namespace HealthyLife.Views
             MessageBox.Show("Заміри збережено та вага профілю оновлена!");
             _mainFrame.Navigate(new DiaryPage(_mainFrame));
         }
-
     }
-
 }
 

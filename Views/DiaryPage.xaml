@@ -137,7 +137,7 @@
                 <StackPanel>
                     <TextBlock Text="Тренування" FontWeight="Bold" FontSize="16"/>
                     <TextBlock x:Name="TrainingSummaryText" Text="Немає запису" Margin="0,5"/>
-                    <Button Content="Додати тренування" Click="TrainingButton_Click" Background="#AED581" Foreground="White" Width="150" Margin="0,5"/>
+                    <Button Content="Додати тренування" Click="TrainingButton_Click" Background="#AED581" Foreground="White" Width="180" Margin="0,5"/>
                 </StackPanel>
             </Border>
 
